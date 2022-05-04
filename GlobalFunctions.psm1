@@ -31,7 +31,7 @@ function Update-ImageReplaceWithRandomChars {
     }
     #clear-host ; "$([char]27)[48;2;0;0;255m$([char]27)[38;2;255;0;255m$Image$([char]27)[0m"
     return $Image
-  }
+}
 
 function Write-BigText {
     param(
