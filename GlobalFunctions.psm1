@@ -1,33 +1,33 @@
 function Write-TextAtPosition {
     Param (
-      [parameter(Mandatory=$true)][string]$Text,
-      [parameter(Mandatory=$true)][int]$PosX,
-      [parameter(Mandatory=$true)][int]$PosY,
-      [switch]$Return
+        [parameter(Mandatory=$true)][string]$Text,
+        [parameter(Mandatory=$true)][int]$PosX,
+        [parameter(Mandatory=$true)][int]$PosY,
+        [switch]$Return
     )
     if ($return) { $OriginalPosition = $Host.UI.RawUI.CursorPosition }
     [string[]]$Text = $Text.split("`n")
   
     $LineNumber = 0
     $Text | ForEach-Object {
-      $Host.UI.RawUI.CursorPosition = @{ X = $PosX ; Y = $PosY }
-      $Host.UI.Write("$($Text[$LineNumber])")
-      $LineNumber++
-      $PosY++
+        $Host.UI.RawUI.CursorPosition = @{ X = $PosX ; Y = $PosY }
+        $Host.UI.Write("$($Text[$LineNumber])")
+        $LineNumber++
+        $PosY++
     }
     if ($return) { $Host.UI.RawUI.CursorPosition = $OriginalPosition }
 }
 
 function Update-ImageReplaceWithRandomChars {
     param(
-      [string]$character,
-      [string[]]$ReplaceArray = (0,1),
-      [string]$Image
+        [string]$character,
+        [string[]]$ReplaceArray = (0,1),
+        [string]$Image
     )
     foreach ($char in 0..($Image.Length-1)) {
-      if ($Image[$char] -eq $character) {
-        $Image = $Image.remove($char,1).insert($char,(Get-Random -InputObject $ReplaceArray))
-      }
+        if ($Image[$char] -eq $character) {
+            $Image = $Image.remove($char,1).insert($char,(Get-Random -InputObject $ReplaceArray))
+        }
     }
     #clear-host ; "$([char]27)[48;2;0;0;255m$([char]27)[38;2;255;0;255m$Image$([char]27)[0m"
     return $Image
@@ -62,47 +62,47 @@ function Write-BigText {
 }
 
 function Write-Scroll {
-  param(
-      [string]$message
-  )
-  $charcount = 69
-  $LineStart = 2
-  $output = [System.Text.StringBuilder]::new()
-  [void]$output.AppendLine('  ____________________________________________________________________________  ')
-  [void]$output.AppendLine(' / ___\                                                                       \ ')
-  [void]$output.AppendLine('| /    |                                                                       |')
-  [void]$output.AppendLine('||     |                                                                       |')
-  [void]$output.AppendLine('||     |                                                                       |')
-  [void]$output.AppendLine('| \___/_______________________________________________________________________/ ')
-  [void]$output.AppendLine('|                                                                       |       ')
-  $ParagraphNumber = 1
-  foreach ($pg in ($message -split "`n")) {
-      $msg = $pg.ToCharArray()
-      $sln = 0
-      foreach ($ln in (0..($msg.count-1))) {
-          $msgb = $msg[$sln..$ln] -join '' -replace "^\s|`r|`n",""
-          if ( $msgb.length -gt $charcount ) {
-              [string]$replace_text = $msg[$sln..($ln-1)] -join '' -replace "^\s|`r|`n",""
-              $sb_line = [System.Text.StringBuilder]::new()
-              [void]$sb_line.Append('|                                                                       |       ')
-              [void]$sb_line.Remove($LineStart,$replace_text.Length)
-              [void]$sb_line.Insert($LineStart,$replace_text)
-              [void]$output.AppendLine($sb_line.ToString())
-              $sln = $ln
-          }
-      }
-      $sb_line = [System.Text.StringBuilder]::new()
-      [void]$sb_line.Append('|                                                                       |       ')
-      [void]$sb_line.Remove($LineStart,$msgb.Length)
-      [void]$sb_line.Insert($LineStart,$msgb)
-      [void]$output.AppendLine($sb_line.ToString())
-      $ParagraphNumber++
-  }
-  [void]$output.AppendLine('|  _____________________________________________________________________|_____  ')
-  [void]$output.AppendLine('| /   \                                                                       \ ')
-  [void]$output.AppendLine('||     |                                                                       |')
-  [void]$output.AppendLine('||     |                                                                       |')
-  [void]$output.AppendLine('| \____|                                                                       |')
-  [void]$output.AppendLine(' \____/_______________________________________________________________________/ ')
-  return $output.ToString()
+    param(
+        [string]$message
+    )
+    $charcount = 69
+    $LineStart = 2
+    $output = [System.Text.StringBuilder]::new()
+    [void]$output.AppendLine('  ____________________________________________________________________________  ')
+    [void]$output.AppendLine(' / ___\                                                                       \ ')
+    [void]$output.AppendLine('| /    |                                                                       |')
+    [void]$output.AppendLine('||     |                                                                       |')
+    [void]$output.AppendLine('||     |                                                                       |')
+    [void]$output.AppendLine('| \___/_______________________________________________________________________/ ')
+    [void]$output.AppendLine('|                                                                       |       ')
+    $ParagraphNumber = 1
+    foreach ($pg in ($message -split "`n")) {
+        $msg = $pg.ToCharArray()
+        $sln = 0
+        foreach ($ln in (0..($msg.count-1))) {
+            $msgb = $msg[$sln..$ln] -join '' -replace "^\s|`r|`n",""
+            if ( $msgb.length -gt $charcount ) {
+                [string]$replace_text = $msg[$sln..($ln-1)] -join '' -replace "^\s|`r|`n",""
+                $sb_line = [System.Text.StringBuilder]::new()
+                [void]$sb_line.Append('|                                                                       |       ')
+                [void]$sb_line.Remove($LineStart,$replace_text.Length)
+                [void]$sb_line.Insert($LineStart,$replace_text)
+                [void]$output.AppendLine($sb_line.ToString())
+                $sln = $ln
+            }
+        }
+        $sb_line = [System.Text.StringBuilder]::new()
+        [void]$sb_line.Append('|                                                                       |       ')
+        [void]$sb_line.Remove($LineStart,$msgb.Length)
+        [void]$sb_line.Insert($LineStart,$msgb)
+        [void]$output.AppendLine($sb_line.ToString())
+        $ParagraphNumber++
+    }
+    [void]$output.AppendLine('|  _____________________________________________________________________|_____  ')
+    [void]$output.AppendLine('| /   \                                                                       \ ')
+    [void]$output.AppendLine('||     |                                                                       |')
+    [void]$output.AppendLine('||     |                                                                       |')
+    [void]$output.AppendLine('| \____|                                                                       |')
+    [void]$output.AppendLine(' \____/_______________________________________________________________________/ ')
+    return $output.ToString()
 }
