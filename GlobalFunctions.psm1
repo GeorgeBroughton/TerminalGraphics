@@ -65,7 +65,7 @@ function Write-Scroll {
   param(
       [string]$message
   )
-  $charcount = 69
+  $charcount = 24
   $LineStart = 2
   $output = [System.Text.StringBuilder]::new()
   [void]$output.AppendLine('  ____________________________________________________________________________  ')
@@ -80,9 +80,9 @@ function Write-Scroll {
       $msg = $pg.ToCharArray()
       $sln = 0
       foreach ($ln in (0..($msg.count-1))) {
-          $msgb = $msg[$sln..$ln] -join '' -replace "^\s",""
-          if ( $msgb.length -gt ($charcount) ) {
-              [string]$replace_text = $msg[$sln..($ln-1)] -join '' -replace "^\s",""
+          $msgb = $msg[$sln..$ln] -join '' -replace "^\s|\n",""
+          if ( $msgb.length -gt $charcount ) {
+              [string]$replace_text = $msg[$sln..($ln-1)] -join '' -replace "^\s|\n",""
               $sb_line = [System.Text.StringBuilder]::new()
               [void]$sb_line.Append('|                                                                       |       ')
               [void]$sb_line.Remove($LineStart,$replace_text.Length)
