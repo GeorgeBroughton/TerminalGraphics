@@ -1,4 +1,5 @@
 Import-Module "$PSScriptRoot\GlobalFunctions.psm1"
+clear-host
 
 [Console]::CursorVisible = $false
 
